@@ -128,7 +128,7 @@ var app = new Vue({
             try {
                 const response = await axios.get(url);
                 this.villians = [];
-                for(let i = 0; i < response.data.length; i++) {
+                for(let i = 0; i < this.numPlayers; i++) {
                     this.villians.push({
                         vName: response.data[i].name,
                         vImage: response.data[i].image,
@@ -174,6 +174,9 @@ var app = new Vue({
         this.getTeam();
         if (this.created > 0) { 
             this.playGame(); 
+        }
+        if (this.created == 0) {
+            this.clear();
         }
     }
 });

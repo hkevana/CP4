@@ -29,7 +29,7 @@ footer
 }
 #teamBox
 {
-  margin: 10px 2vw 0 2vw;
+  margin: 10px 2vw 10px 2vw;
   border: 3px solid black;
   box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.2);
   background-image: linear-gradient(to top right, aqua, lime);
@@ -176,4 +176,10 @@ h2
 #vName
 {
   color: orange;
+}
+#homepage
+{
+  float: right;
+  font-style: italic;
+  color: grey;
 }

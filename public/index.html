@@ -9,6 +9,7 @@
     </head>
     <body>
         <div id="app">
+            <a href="http://hkevana.com" id="homepage">hkevana.com</a>
             <header>
                 <h1>Fantasy Basketball</h1>
                 <h3>BUILD YOUR TEAM!</h3>
@@ -28,7 +29,6 @@
                 <button @click="generateAllStars">USE ALL-STAR TEAM</button>
             </div>
             <div v-if="displayResults">
-                <a href="/game.html"><span id="gameTime">PLAY BALL!!</span></a>
                 <div id="teamBox">
                     <ul>
                         <li id="outLI" v-for="object in players">
@@ -38,6 +38,7 @@
                         </li>
                     </ul>
                 </div>
+                <a href="/game.html"><span id="gameTime">PLAY BALL!!</span></a>
             </div>
             
             <footer>

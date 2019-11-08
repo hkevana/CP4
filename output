@@ -1,8 +1,2 @@
 nohup: ignoring input
 starting on port:  4200
-[0mGET / [36m304 [0m5.392 ms - -[0m
-[0mGET /stylesheets/style.css [36m304 [0m0.812 ms - -[0m
-[0mGET /javascripts/script.js [36m304 [0m0.288 ms - -[0m
-in getTeam
-[]
-[0mGET /getTeam [36m304 [0m4.294 ms - -[0m
