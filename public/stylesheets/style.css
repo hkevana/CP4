@@ -1,19 +1,22 @@
 body 
 {
+  display: flex;
+  flex-wrap: wrap;
   background-color: #f9f9f9;
   font: 14px "Arvo";
+  text-align: center;
 }
-section
+#app
 {
-  margin-bottom: 20px;
+  width: 100%;
 }
 footer
 {
   position: fixed;
   bottom: 0;
   width: 100vw;
-  text-align: center;
   background-color: #f9f9f9;
+  text-align: center;
 }
 #inputBox
 {
@@ -21,19 +24,64 @@ footer
   margin: 10px 20vw 10px 20vw;
   border: 3px solid black;
   box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.2);
+  background-color: beige;
   text-align: center;
 }
 #teamBox
 {
+  margin: 10px 2vw 0 2vw;
   border: 3px solid black;
   box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.2);
   background-image: linear-gradient(to top right, aqua, lime);
 }
-#villianBox
+#gameTeamBox
 {
+  width: 40vw;
+  float: left;
+}
+#gameTeamLI
+{
+  width: 250px;
+}
+#playerBox
+{
+  margin-bottom: 5px;
+  width: 120px;
+  float: left;
   border: 3px solid black;
   box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.2);
-  background-image: linear-gradient(to bottom right, yellow, red);
+  background-image: linear-gradient(to bottom right, aqua, lime);
+}
+#playerStats
+{
+  width: calc(250px - 126px);
+  float: right;
+  text-align: center;
+}
+#gameVillianBox
+{
+  width: 40vw;
+  margin-bottom: 12px;
+  float: right;
+}
+#gameVillianLI
+{
+  width: 250px;
+}
+#villianPlayerBox
+{
+  margin-bottom: 5px;
+  width: 120px;
+  float: right;
+  border: 3px solid black;
+  box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.2);
+  background-image: linear-gradient(to bottom left, yellow, red);
+}
+#villianStats
+{
+  width: calc(250px - 126px);
+  float: left;
+  text-align: center;
 }
 input
 {
@@ -53,7 +101,7 @@ ul
   list-style-type: none;
   text-align: center;
 }
-li
+#outLI
 {
   display: inline-block;
   width: 120px;
@@ -67,7 +115,7 @@ img
 {
   width: 100px;
   height: 100px;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 10px;
 }
 h1
@@ -98,4 +146,34 @@ a:hover
 {
   margin: 0;
 }
-
+#gameTime
+{
+  margin: 10px;
+  padding: 3px;
+  border: 3px solid navy;
+  border-radius: 4px;
+  background-color: gold;
+  color: black;
+  font-weight: bold;
+}
+#gameTime:hover
+{
+  background-color: navy;
+  border-color: gold;
+  color: #f9f9f9;
+}
+h2
+{
+  width: 100%;
+  text-align: center;
+  font-family: serif;
+  background-color: black;
+}
+#pName
+{
+  color: lime;
+}
+#vName
+{
+  color: orange;
+}

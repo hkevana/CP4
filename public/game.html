@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+        <title>Creative Project 4</title>
+    </head>
+    
+    <body>
+        <div id="app">
+            <p id="gameTime">GAME TIME</p>
+            <h1 id="winnerBox">{{ winner }}</h1>
+            <h1>{{ playerScore }} to {{ villianScore }}</h1>
+            <a href="http://hkevana.com:4200">Return to Build your Team</a>
+            <header>
+                <button @click.prevent="playGame">REMATCH</button>
+            </header>
+            <div id="gameTeamBox">
+                <h1>Wins: {{ playerWins }}</h1>
+                <h2 id="pName">{{ playerName }}</h2>
+                <ul>
+                    <li id="gameTeamLI" v-for="object in players">
+                        <div id="playerBox">
+                            <h3>{{ object.name }}</h3>
+                            <img :src="object.image">
+                            <h3>{{ object.position }}</h3>
+                        </div>
+                        <div id="playerStats">
+                            <ul>
+                                <p><b>Stats</b></p>
+                                <li>
+                                    Points: {{ object.points }}<br>
+                                    Rebounds: {{ object.rebounds }}<br>
+                                    Fouls: {{ object.fouls }}<br>
+                                    Played: {{ object.gamesPlayed }}
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="gameVillianBox">
+                <h1>Wins: {{ villianWins }}</h1>
+                <h2 id="vName">{{ villianName }}</h2>
+                <ul>
+                    <li id="gameVillianLI" v-for="object in villians">
+                        <div id="villianPlayerBox">
+                            <h3>{{ object.vName }}</h3>
+                            <img :src="object.vImage">
+                            <h3>{{ object.vPosition }}</h3>
+                        </div>
+                        <div id="villianStats">
+                            <ul>
+                                <p><b>Stats</b></p>
+                                <li>
+                                    Points: {{ object.vPoints }}<br>
+                                    Rebounds: {{ object.vRebounds }}<br>
+                                    Fouls: {{ object.vFouls }}<br>
+                                    Played: {{ object.vGamesPlayed }}
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <footer>
+                <a href="https://github.com/hkevana/CP4">GitHub Repository</a>
+            </footer>
+        </div>
+    </body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.2/dist/vue.js"></script>
+    <script src="/javascripts/script.js"></script>
+</html>

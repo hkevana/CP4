@@ -3,33 +3,45 @@
 var app = new Vue({
     el: '#app',
     data: {
+        created: 0,
         error: false,
         errorMessage: '',
         displayResults: false,
         inName: '',
-        inHeight: '',
-        inWeight: '',
+        numPlayers: 0,
         players: [],
         villians: [],
+        winner: '',
+        playerScore: '',
+        villianScore: '',
+        playerWins: 0,
+        villianWins: 0,
+        villianName: 'The Fantabulous Five',
+        playerName: 'The Web Programmers'
     },
     methods: {
         async getTeam() {
+            this.created++;
             console.log("called getTeam()");
             const url = 'http://hkevana.com:4200/getTeam';
             try {
                 const response = await axios.get(url);
                 console.log(response.data);
                 this.players = [];
+                this.numPlayers = 0;
                 if ( response.data.length > 0) {
                     for(let i = 0; i < response.data.length; i++) {
                         this.players.push({
                             name: response.data[i].name,
-                            height: response.data[i].height,
-                            weight: response.data[i].weight,
                             image: response.data[i].image,
+                            position:  response.data[i].position,
+                            points: response.data[i].points,
+                            rebounds: response.data[i].rebounds,
+                            fouls: response.data[i].fouls,
+                            gamesPlayed: response.data[i].gamesPlayed
                         });
+                        this.numPlayers++;
                     }
-                    this.generateVillians();
                     this.displayResults = true;
                 }
             } catch(err) {
@@ -42,38 +54,49 @@ var app = new Vue({
             const url = 'http://hkevana.com:4200/addPlayer';
             const imgURL = 'http://hkevana.com:4200/getImage';
             var img = '';
-            try {
-                const response = await axios.get(imgURL);
-                console.log(response.data);
-                img = response.data.url;
-            } catch(err) { console.log(err); }
-            console.log("image = ", img);
             if (this.inName != '' && this.inHeight != '' && this.inWeight != '') {
-                if (this.players.length >= 5) {
+                if (this.numPlayers >= 5) {
                     this.errorMessage = "roster can only contain 5 players";
                     this.error = true;
                     return;
                 }
+                try {
+                    const response = await axios.get(imgURL);
+                    console.log(response.data);
+                    img = response.data.url;
+                } catch(err) { console.log(err); }
+                this.numPlayers++;
+                var pos = ['point', 'wing', 'shooting guard', 'small forward', 'center'];
+                var playerPos = pos[this.numPlayers - 1];
                 axios.post(url, {
                     name: this.inName,
                     image: img,
-                    height: this.inHeight,
-                    weight: this.inWeight,
+                    position: playerPos,
+                    points: '',
+                    rebounds: '',
+                    fouls: '',
+                    gamesPlayed: ''
                 }).then(respoonse => {})
                 .catch(e => {
                     console.log(e);
                 });
                 this.inName = '';
-                this.inHeight = '';
-                this.inWeight = '';
                 this.getTeam();
             } else {
                 this.errorMessage = "Please provide input";
                 this.error = true;
             }
         },
+        removePlayer() {
+            const url = "http://hkevana.com:4200/remove";
+            axios.delete(url);
+            this.getTeam();
+            this.displayResults = false;
+            
+        },
         clearAll() {
             this.players = [];
+            this.numPlayers = 0;
             const url = 'http://hkevana.com:4200/clear';
             axios.delete(url);
             this.displayResults = false;
@@ -87,13 +110,14 @@ var app = new Vue({
                 for (let i = 0; i < response.data.length; i++) {
                     this.players.push({
                         name: response.data[i].name,
-                        height: response.data[i].height,
-                        weight: response.data[i].weight,
                         image: response.data[i].image,
                         position: response.data[i].position,
+                        points: response.data[i].points,
+                        rebounds: response.data[i].rebounds,
+                        fouls: response.data[i].fouls,
+                        gamesPlayed: response.data[i].gamesPlayed
                     });
                 }
-                this.generateVillians();
                 this.displayResults = true;
                 console.log(this.players);
             } catch(err) { console.log(err) }
@@ -107,10 +131,12 @@ var app = new Vue({
                 for(let i = 0; i < response.data.length; i++) {
                     this.villians.push({
                         vName: response.data[i].name,
-                        vHeight: response.data[i].height,
-                        vWeight: response.data[i].weight,
                         vImage: response.data[i].image,
                         vPosition: response.data[i].position,
+                        vPoints: response.data[i].points,
+                        vRebounds: response.data[i].rebounds,
+                        vFouls: response.data[i].fouls,
+                        vGamesPlayed: response.data[i].gamesPlayed
                     });
                 }
                 console.log(this.villians);
@@ -122,13 +148,36 @@ var app = new Vue({
             this.errorMessage = '';
         },
         playGame() {
-            
+            this.playerScore = getRandNum(64, 54);
+            this.villianScore = getRandNum(56, 56);
+            if (this.playerScore < this.villianScore) {
+                this.winner = this.villianName + ' Won :(';
+                this.villianWins++;
+                document.getElementById("winnerBox").style.color = "orange";
+            }
+            else if (this.playerScore > this.villianScore) {
+                this.winner = this.playerName + ' Won!! :D';
+                this.playerWins++;
+                document.getElementById("winnerBox").style.color = "aqua";
+            }
+            else {
+                this.winner = "AMAZING!!! It's a tie! :O";
+                document.getElementById("winnerBox").style.color = "purple";
+            }
+            var url = 'http://hkevana.com:4200/play';
+            axios.put(url);
+            this.generateVillians();
+            this.getTeam();
         },
-        getRandNum(min, max) { 
-            return Math.floor((Math.random * max) + min); 
-        }
     },
     created: function() {
         this.getTeam();
+        if (this.created > 0) { 
+            this.playGame(); 
+        }
     }
 });
+
+function getRandNum(min, range) { 
+    return Math.floor((Math.random() * range) + min); 
+}

@@ -11,61 +11,37 @@
         <div id="app">
             <header>
                 <h1>Fantasy Basketball</h1>
+                <h3>BUILD YOUR TEAM!</h3>
             </header>
             
-            <section>
-                <div v-if="error">
-                    <h4>***{{ errorMessage }}***</h4>
+            <div v-if="error">
+                <h4>***{{ errorMessage }}***</h4>
+            </div>
+            <div id="inputBox">
+                <form @click="clearError">
+                    <label>Player Name: </label><input type="text" v-model="inName"><br>
+                </form>
+                <button @click.prevent="addPlayer">ADD</button>
+                <button @click.prevent="removePlayer">REMOVE</button>
+                <button @click.prevent="clearAll">CLEAR</button>
+                <br>
+                <button @click="generateAllStars">USE ALL-STAR TEAM</button>
+            </div>
+            <div v-if="displayResults">
+                <a href="/game.html"><span id="gameTime">PLAY BALL!!</span></a>
+                <div id="teamBox">
+                    <ul>
+                        <li id="outLI" v-for="object in players">
+                            <h3>{{ object.name }}</h3>
+                            <img :src="object.image">
+                            <h3>{{ object.position }}</h3>
+                        </li>
+                    </ul>
                 </div>
-                <div id="inputBox">
-                    <form @click="clearError">
-                        <label>Player Name: </label><input type="text" v-model="inName"><br>
-                        <label>Height:(cm) </label><input type="number" v-model="inHeight"><br>
-                        <label>Weight:(lbs) </label><input type="number" v-model="inWeight"><br>
-                    </form>
-                    <button @click.prevent="addPlayer">ADD</button>
-                    <button @click.prevent="clearAll">CLEAR</button>
-                    <br>
-                    <button @click="generateAllStars">USE ALL-STAR TEAM</button>
-                </div>
-                <div v-if="displayResults">
-                    <div id="teamBox">
-                        <ul>
-                            <li v-for="object in players">
-                                <div id="playerBox">
-                                    <h3>{{ object.name }}</h3>
-                                    <img :src="object.image">
-                                    <h3>{{ object.position }}</h3>
-                                    <label>Stats:</label>
-                                    <p id="stats">
-                                        height: {{ object.height }}cm<br>
-                                        weight: {{ object.weight }}lbs<br>
-                                    </p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <h1>VS.<br><button @click="playGame">PLAY BALL!!</button></h1>
-                    
-                    <div id="villianBox">
-                        <ul>
-                            <li v-for="object in villians">
-                                <h3>{{ object.vName }}</h3>
-                                <img :src="object.vImage">
-                                <h3>{{ object.vPosition }}</h3>
-                                <label>Stats:</label>
-                                <p id="stats">
-                                    height: {{ object.vHeight }}<br>
-                                    weight: {{ object.vWeight }}<br>
-                                </p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+            </div>
             
             <footer>
-                <a href="http://hkevana.com">Return to Homepage</a>
+                <a href="https://github.com/hkevana/CP4">GitHub Repository</a>
             </footer>
         </div>
     </body>
